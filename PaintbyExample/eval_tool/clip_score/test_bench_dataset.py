@@ -61,30 +61,40 @@ class COCOImageDataset(data.Dataset):
         self.id_list=self.id_list.tolist()
         # print("ID LIST: ",self.id_list)
         # print("length of test bench",len(self.id_list))
-        self.length=len(self.id_list)
+        # self.length=len(self.id_list)
 
         # print("Result Dir: ",self.result_dir)
         # print("Test Bench Dir: ",self.test_bench_dir)
-
+        self.output_files = os.listdir('results/results')
+        self.length = len(self.output_files)
        
 
     
     def __getitem__(self, index):
+        result_img_name = self.output_files[index]
+        parsed_result_name = result_img_name.split('_')
+        mask_img_name, ref_img_name = parsed_result_name[0] + "_mask.png", parsed_result_name[1]
+        print("Output File: ",result_img_name)
+        print("Mask Image Name: ",mask_img_name)
+        print("Ref Image Name: ",ref_img_name)
+
+        # result_img_name = str(self.id_list[index]).zfill(12)+'.png'
         # print("Open results/%s" % str(self.id_list[index]).zfill(12)+'.png')
-        result_path=os.path.join(os.path.join(self.result_dir,str(self.id_list[index]).zfill(12)+'.png'))
+
+        result_path=os.path.join(os.path.join(self.result_dir,result_img_name))
         result_p = Image.open(result_path).convert("RGB")
         result_tensor = get_tensor_clip()(result_p)
 
         ### Get reference
         # print("Open Ref_3500/%s" % str(self.id_list[index]).zfill(12)+'_ref.png')
-        ref_img_path=os.path.join(os.path.join(self.test_bench_dir,'Ref_3500',str(self.id_list[index]).zfill(12)+'_ref.png'))
+        ref_img_path=os.path.join(os.path.join(self.test_bench_dir,'Ref_3500',ref_img_name))
         ref_img=Image.open(ref_img_path).resize((224,224)).convert("RGB")
         ref_image_tensor=get_tensor_clip()(ref_img)
 
    
         ### bbox mask
         # print("Open Mask_bbox_3500/%s" % str(self.id_list[index]).zfill(12)+'_mask.png')
-        mask_path=os.path.join(os.path.join(self.test_bench_dir,'Mask_bbox_3500',str(self.id_list[index]).zfill(12)+'_mask.png'))
+        mask_path=os.path.join(os.path.join(self.test_bench_dir,'Mask_bbox_3500',mask_img_name))
         mask_img=cv2.imread(mask_path,cv2.IMREAD_GRAYSCALE)
         idx0 = np.nonzero(mask_img.ravel()==255)[0]
         idxs = [idx0.min(), idx0.max()]
@@ -93,7 +103,7 @@ class COCOImageDataset(data.Dataset):
         crop_tensor=T.Resize([224,224])(crop_tensor)
 
     
-        return crop_tensor,ref_image_tensor
+        return crop_tensor,ref_image_tensor,result_img_name
 
 
 

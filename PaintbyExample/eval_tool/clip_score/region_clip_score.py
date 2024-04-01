@@ -31,7 +31,7 @@ clip_model,preprocess = clip.load("ViT-B/32", device="cpu")
 sum=0
 count=0
 results=dict()
-for crop_tensor,ref_image_tensor in tqdm(test_dataloader):
+for crop_tensor,ref_image_tensor,result_img_name in tqdm(test_dataloader):
     crop_tensor=crop_tensor.to('cpu')
     ref_image_tensor=ref_image_tensor.to('cpu')
     result_feat = clip_model.encode_image(crop_tensor)
@@ -42,9 +42,9 @@ for crop_tensor,ref_image_tensor in tqdm(test_dataloader):
     ref_feat = ref_feat / ref_feat.norm(dim=-1, keepdim=True)
     similarity = (100.0 * result_feat @ ref_feat.T)
 
-    img_id = str(count+1).zfill(12)
-    results[img_id] = similarity.item()
-    print("Similarity [%s]: %s" % (img_id, similarity.item()))
+    # img_id = str(count+1).zfill(12)
+    results[result_img_name[0]] = similarity.item()
+    print("Similarity [%s]: %s" % (result_img_name[0], similarity.item()))
 
     sum=sum+similarity.item()
     count=count+1
