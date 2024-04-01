@@ -3,3 +3,7 @@
 test_bench_raw/
 create_id_list.py
 CLIP_output.csv
+PaintbyExample/ldm*
+PaintbyExample/src*
+checkpoints/
+*egg-info*

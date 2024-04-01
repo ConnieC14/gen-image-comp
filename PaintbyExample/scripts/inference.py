@@ -382,7 +382,9 @@ def main():
                         x_sample = 255. * rearrange(x_sample.cpu().numpy(), 'c h w -> h w c')
                         img = Image.fromarray(x_sample.astype(np.uint8))
                         # img = put_watermark(img, wm_encoder)
-                        img.save(os.path.join(result_path, filename[:-4]+'_'+str(opt.seed)+".png"))
+                        print("Raw File: %s" % filename)
+                        print("SAVING FILE TO: %s" % os.path.join(result_path, filename[:-4]+"_"+opt.reference_path.split('/')[-1]))
+                        img.save(os.path.join(result_path, filename[:-4]+"_"+opt.reference_path.split('/')[-1]))
                         
                         mask_save=255.*rearrange(un_norm(inpaint_mask[i]).cpu(), 'c h w -> h w c').numpy()
                         mask_save= cv2.cvtColor(mask_save,cv2.COLOR_GRAY2RGB)
