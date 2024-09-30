@@ -22,8 +22,8 @@ We construct a custom evaluation dataset composed of 120 background and logo pai
 Our results revealed that the naive baseline performed better within our experimental setup. We aim for this work to shed light on the unique challenges of using logos as product representations in various applications. For instance, maintaing the structural integrity of the logo while ensuring it semantically aligns with the background scene.
 
 <p align="center">
-  Average CLIP Similarity Score for each logo on our evaluation dataset:
-<img width="280" alt="image" src="https://github.com/user-attachments/assets/87f719f4-6635-4591-be07-6a077fc8ff44" hspace="10"/>
+  <p> Average CLIP Similarity Score for each logo on our evaluation dataset:</p>
+  <img width="280" alt="image" src="https://github.com/user-attachments/assets/87f719f4-6635-4591-be07-6a077fc8ff44" hspace="10"/>
 </p>
 
 ## References
