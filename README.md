@@ -10,9 +10,24 @@ We evaluate the performance of our model using two key metrics: Frechet Inceptio
   <img src="https://github.com/user-attachments/assets/6ce8583b-1912-42d6-b41e-b84d4d7b1ce2" width="50%" hspace="10"/>
 </p>
 
+## Dataset 
+We construct a custom evaluation dataset composed of 120 background and logo pairs. The background images are drawn from a combination of the Logos-in-the-Wild dataset Tüzkö et al. [2017] which contain images with logos being placed and the COCOEE evaluation dataset developed by Yang et al. [2023]. Non-square background images are resized to RGB images of 512 × 512 × 3. Using Google, we scraped 12 logos to use as reference images. Each background is annotated with a bounding box for where the generated logo image can be placed. Then, a rectangular binary mask is generated from the bounding box to condition the model on. See Figure 4 for the logos used in the evaluation dataset.
+
+## Method
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/49b5970f-0450-45bf-b4bd-0998b4da8901" width="50%" hspace="10"/>
+</p>
+
+## Results
+Our results revealed that the naive baseline performed better within our experimental setup. We aim for this work to shed light on the unique challenges of using logos as product representations in various applications. For instance, maintaing the structural integrity of the logo while ensuring it semantically aligns with the background scene.
+
+<p align="center">
+  Average CLIP Similarity Score for each logo on our evaluation dataset:
+<img width="280" alt="image" src="https://github.com/user-attachments/assets/87f719f4-6635-4591-be07-6a077fc8ff44" hspace="10"/>
+</p>
+
 ## References
 
-References
 - [1] Roy Hachnochi, Mingrui Zhao, Nadav Orzech, Rinon Gal, Ali Mahdavi-Amiri, Daniel Cohen-Or, and Amit Haim
 Bermano. Cross-domain compositing with pretrained diffusion models, 2023.
 - [2] Divya Bhargavi, Karan Sindwani, and Sia Gholami. Zero-shot virtual product placement in videos. In
